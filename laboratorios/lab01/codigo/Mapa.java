@@ -1,7 +1,7 @@
 /**
 * Esta clase debe de contener la solucion al problema planteado en el punto 1
 * del laboratorio#1 del curso de estructura de datos y algoritmos II
-* @author Daniel Mesa, Mauricio Toro
+* @author Daniel Garcia
 * @version 1.0
 */
 import java.io.BufferedReader;
@@ -23,7 +23,7 @@ public class Mapa
             e.printStackTrace();
         }
     }
-
+ //Metodo donde crearemos el mapa a través de la estructura de datos conocida como HashMap
     public void makeMap() throws IOException
   {
 
@@ -32,21 +32,26 @@ public class Mapa
       boolean nodo = true;
 
       try{
+        //Leemos el archivo por lineas (para esto hacemos el ciclo)
         BufferedReader  br = new BufferedReader(new FileReader(nombreArchivo));
         String linea = br.readLine();
         linea = br.readLine();
         while(linea != null){
+          //Dividimos cada linea por espacios, asi sabremos diferenciar un dato de otro
            String[] item= linea.split(" ");
-           if(linea.isEmpty()){
+          //Si la linea esta vacia simplemente pasamos a leer la siguiente linea 
+          if(linea.isEmpty()){
                linea = br.readLine();
            }
 
-
+             //Cuando el programa encuentre la palabra arcos entonces insertaremos los datos correspondientes
+             //En este caso insertaremos el ID de cada nodo adyacente y la distancia entre ellos
              if(linea.contains("Arcos")){
                   nodo = false;
                   linea = br.readLine();
              }
-
+              
+          //Creamos los nodos y cuando hayan arcos ingresaremos los valores
              if(nodo == true){
                  long ID1 = Long.parseLong(item[0]);
                  LinkedList<Pair<Long, Double>> adyacente = new LinkedList();
@@ -55,6 +60,7 @@ public class Mapa
              }else{
                item= linea.split(" ");
                long ID1 = Long.parseLong(item[0]);
+               //Utilizaremos el metodo 'aristas()' que nos devolvera una lista de todos los nodos adyacentes al nodo previamente indicado
                LinkedList<Pair<Long,Double>> m = aristas(ID1);
                vertice.put(ID1, m);
              }
@@ -71,6 +77,7 @@ public class Mapa
       }
   }
 
+   //Este metodo nos devolvera el LinkedList con los nodos adyacentes del nodo que queramos saber
     public  LinkedList<Pair<Long, Double>> aristas(long ID1) throws IOException
   {
       LinkedList<Pair<Long, Double>> elementos = new LinkedList();;
@@ -98,6 +105,8 @@ public class Mapa
              if(nodo == false){
                  item= linea.split(" ");
                  long n = Long.parseLong(item[0]);
+                 //Si el nodo de inicio corresponde al nodo que ingreso el usuario entonces nos interesa saber con cuales nodos es adyacentes
+                 //Y la distancia entre ellos, esta informacion la almacenaremos en una lista
                  if(n == r){
                       long ID2 = Long.parseLong(item[1]);
                       Double distancia = Double.parseDouble(item[2]);
